@@ -13,7 +13,10 @@ class HomePage extends StatelessWidget {
         title: const Text('Notas App'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, 'nuevo'),
+        onPressed: () {
+          Navigator.pushNamed(context, 'nota');
+        },
+        child: const Icon(Icons.add),
       ),
       body: FutureBuilder(
         future: UserServices().getNotes(),

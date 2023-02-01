@@ -1,13 +1,42 @@
 import 'package:notesapp/models/note.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+// Arreglar dependencias firebase
+// Min 6:38
 
 class UserServices {
   Future<List<Note>> getNotes() async {
-    List<Note> myNotes = [
-      Note(title: 'Titulo 1', content: 'Contenido nota 1'),
-      Note(title: 'Titulo 2', content: 'Contenido nota 2'),
-      Note(title: 'Titulo 3', content: 'Contenido nota 3'),
-      Note(title: 'Titulo 4', content: 'Contenido nota 4'),
-    ];
+    List<Note> myNotes = [];
+    //TODO añadir luego un try catch
+    await Firebase.initializeApp();
+    DataSnapshot snap = await FirebaseDatabase.instance.reference().child('notes').once();
+
+    if (snap.exists) {
+      snap.value.forEach((key, value){
+        Map mapa = {'key':key, ...value};
+        Note newNote = Note(
+          content: mapa['body'],
+          key: mapa['key'],
+          title: mapa['title'],
+        );
+        print(newNote);
+      });
+    }
     return myNotes;
+  }
+
+  Future<bool> saveNotes(String title, String content) async {
+    try {
+      await Firebase.initializeApp();
+      await FirebaseDatabase.instance
+          .reference()
+          .child('notes')
+          .push()
+          .set({'title': title, 'body': content});
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

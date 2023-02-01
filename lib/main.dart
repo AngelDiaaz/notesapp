@@ -16,28 +16,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Notas App',
       theme: myTheme(context),
-      home: const MyHomePage(title: 'Notas App'),
-      routes: {'nuevo': (context) => const NewNote()},
+      routes: {
+        '/': (_) => const HomePage(),
+        'nota': (_) => const NewNote()},
+      initialRoute: '/',
     );
-  }
-}
-
-// Solucionar boton floating
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-
-    return const HomePage();
   }
 }
