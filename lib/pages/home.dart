@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Notas App'),
+          centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -35,8 +36,14 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   for (Note note in notes)
                     ListTile(
-                      title: Text(note.title!),
-                      subtitle: Text(note.content!),
+                      title: Text(note.title),
+                      subtitle: Text(note.content),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete_outline_outlined),
+                        onPressed: () {
+                          state!.deleteNote(note.key);
+                        },
+                      ),
                     )
                 ],
               );

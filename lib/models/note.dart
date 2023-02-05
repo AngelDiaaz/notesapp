@@ -1,11 +1,11 @@
 class Note {
   Note({
-    this.key,
-    this.title,
-    this.content,
+    required this.key,
+    required this.title,
+    required this.content,
   });
 
-  String? key;
-  String? title;
-  String? content;
+  String key;
+  String title;
+  String content;
 }

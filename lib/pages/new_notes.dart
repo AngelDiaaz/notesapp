@@ -12,9 +12,9 @@ class NewNote extends StatefulWidget {
 }
 
 class _NewNoteState extends State<NewNote> {
-  final TextEditingController _tituloController = TextEditingController();
-  final TextEditingController _contenidoController = TextEditingController();
-  final GlobalKey<FormState> _formularioKey = GlobalKey<FormState>();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +25,12 @@ class _NewNoteState extends State<NewNote> {
           // height: 300,
           color: Colors.white70,
           child: Form(
-              key: _formularioKey,
+              key: _formKey,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _tituloController,
+                      controller: _titleController,
                       decoration:
                           const InputDecoration(labelText: 'Título de la nota'),
                       validator: (value) {
@@ -41,7 +41,7 @@ class _NewNoteState extends State<NewNote> {
                       },
                     ),
                     TextFormField(
-                      controller: _contenidoController,
+                      controller: _contentController,
                       decoration: const InputDecoration(labelText: 'Contenido'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -56,14 +56,14 @@ class _NewNoteState extends State<NewNote> {
                       children: [
                         ElevatedButton(
                             onPressed: () async {
-                              if (_formularioKey.currentState!.validate()) {
-                                bool respuesta = await Provider.of<AppState>(context,
+                              if (_formKey.currentState!.validate()) {
+                                bool response = await Provider.of<AppState>(context,
                                         listen: false)
                                     .saveNotes(
-                                    _tituloController.text,
-                                    _contenidoController.text);
+                                    _titleController.text,
+                                    _contentController.text);
 
-                                if (respuesta) {
+                                if (response) {
                                   Navigator.pop(context);
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
@@ -96,8 +96,8 @@ class _NewNoteState extends State<NewNote> {
 
   @override
   void dispose() {
-    _tituloController.dispose();
-    _contenidoController.dispose();
+    _titleController.dispose();
+    _contentController.dispose();
     super.dispose();
   }
 }

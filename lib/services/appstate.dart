@@ -5,11 +5,11 @@ import '../models/note.dart';
 class AppState with ChangeNotifier {
   Future<bool> saveNotes(String text, String text2) async {
     try {
-      bool respuesta = await UserServices().saveNotes(text, text2);
-      if (respuesta) {
+      bool response = await UserServices().saveNotes(text, text2);
+      if (response) {
         notifyListeners();
       }
-      return respuesta;
+      return response;
     } catch (e) {
       return false;
     }
@@ -23,6 +23,18 @@ class AppState with ChangeNotifier {
       return _myNotes;
     } catch (e) {
       return _myNotes;
+    }
+  }
+
+  Future<bool> deleteNote(String key) async {
+    try {
+      bool response = await UserServices().deleteNote(key);
+      if (response) {
+        notifyListeners();
+      }
+      return response;
+    } catch (e) {
+      return false;
     }
   }
 }
