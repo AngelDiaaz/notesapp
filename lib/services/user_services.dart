@@ -1,11 +1,6 @@
-import 'dart:collection';
-
 import 'package:notesapp/models/note.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-// Arreglar dependencias firebase
-// Min 6:38
 
 class UserServices {
   Future<List<Note>> getNotes() async {
@@ -15,7 +10,7 @@ class UserServices {
     DatabaseEvent snap = await FirebaseDatabase.instance.ref().child('notes').once();
 
     if (snap.snapshot.exists) {
-      var value;
+      dynamic value;
       // print(snap.snapshot.value );
       for(var i = 0; i < snap.snapshot.children.length; i++){
         var key = snap.snapshot.children.elementAt(i).key;

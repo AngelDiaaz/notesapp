@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/services/appstate.dart';
+import 'package:provider/provider.dart';
 
 import '../models/note.dart';
-import '../services/user_services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,16 +12,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AppState? state;
+
   @override
   Widget build(BuildContext context) {
+    state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Notas App'),
-          actions: [
-            IconButton(
-                onPressed: () => setState(() {}),
-                icon: const Icon(Icons.refresh))
-          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -29,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           child: const Icon(Icons.add),
         ),
         body: FutureBuilder(
-            future: UserServices().getNotes(),
+            future: state!.getNotes(),
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
               List notes = snapshot.data ?? [];
               return ListView(

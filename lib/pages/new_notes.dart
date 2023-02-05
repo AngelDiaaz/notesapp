@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/pages.dart';
+import 'package:provider/provider.dart';
+import 'package:notesapp/services/services.dart';
 
 class NewNote extends StatefulWidget {
   const NewNote({
@@ -56,7 +57,9 @@ class _NewNoteState extends State<NewNote> {
                         ElevatedButton(
                             onPressed: () async {
                               if (_formularioKey.currentState!.validate()) {
-                                bool respuesta = await UserServices().saveNotes(
+                                bool respuesta = await Provider.of<AppState>(context,
+                                        listen: false)
+                                    .saveNotes(
                                     _tituloController.text,
                                     _contenidoController.text);
 
