@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:notesapp/models/note.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,19 +12,23 @@ class UserServices {
     List<Note> myNotes = [];
     //TODO añadir luego un try catch
     await Firebase.initializeApp();
-    DataSnapshot snap = await FirebaseDatabase.instance.reference().child('notes').once();
+    DatabaseEvent snap = await FirebaseDatabase.instance.ref().child('notes').once();
 
-    if (snap.exists) {
-      snap.value.forEach((key, value){
-        Map mapa = {'key':key, ...value};
+    if (snap.snapshot.exists) {
+      var value;
+      // print(snap.snapshot.value );
+      for(var i = 0; i < snap.snapshot.children.length; i++){
+        var key = snap.snapshot.children.elementAt(i).key;
+        value = snap.snapshot.children.elementAt(i).value;
+        Map map = {'key': key, ...value};
+
         Note newNote = Note(
-          content: mapa['body'],
-          key: mapa['key'],
-          title: mapa['title'],
+          content: map['body'],
+          key: map['key'],
+          title: map['title'],
         );
-        print(newNote);
-      });
-    }
+        myNotes.add(newNote);
+    }}
     return myNotes;
   }
 
@@ -30,7 +36,7 @@ class UserServices {
     try {
       await Firebase.initializeApp();
       await FirebaseDatabase.instance
-          .reference()
+          .ref()
           .child('notes')
           .push()
           .set({'title': title, 'body': content});
