@@ -15,6 +15,7 @@ class _NewNoteState extends State<NewNote> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool response = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,23 +57,22 @@ class _NewNoteState extends State<NewNote> {
                       children: [
                         ElevatedButton(
                             onPressed: () async {
+                              final navigator = Navigator.of(context);
+                              final messenger = ScaffoldMessenger.of(context);
                               if (_formKey.currentState!.validate()) {
-                                bool response = await Provider.of<AppState>(context,
+                                response = await Provider.of<AppState>(context,
                                         listen: false)
-                                    .saveNotes(
-                                    _titleController.text,
-                                    _contentController.text);
+                                    .saveNotes(_titleController.text,
+                                        _contentController.text);
 
                                 if (response) {
-                                  Navigator.pop(context);
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
+                                  navigator.pop();
+                                  messenger.showSnackBar(const SnackBar(
                                     content: Text('Nota guardada'),
                                     backgroundColor: Colors.green,
                                   ));
                                 } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
+                                  messenger.showSnackBar(const SnackBar(
                                     content: Text('Error al guardar la nota'),
                                     backgroundColor: Colors.red,
                                   ));
