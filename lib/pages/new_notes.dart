@@ -15,7 +15,6 @@ class _NewNoteState extends State<NewNote> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool response = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +59,7 @@ class _NewNoteState extends State<NewNote> {
                               final navigator = Navigator.of(context);
                               final messenger = ScaffoldMessenger.of(context);
                               if (_formKey.currentState!.validate()) {
-                                response = await Provider.of<AppState>(context,
+                               bool response = await Provider.of<AppState>(context,
                                         listen: false)
                                     .saveNotes(_titleController.text,
                                         _contentController.text);
