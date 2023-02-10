@@ -104,11 +104,4 @@ class _NewNoteState extends State<NewNote> {
   //   contentController.dispose();
   //   super.dispose();
   // }
-
-  String text(String text) {
-    if (text.isNotEmpty) {
-      return text;
-    }
-    return "";
-  }
 }
