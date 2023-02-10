@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/services/appstate.dart';
 import 'package:provider/provider.dart';
-
 import '../models/note.dart';
 import 'new_notes.dart';
 
@@ -37,8 +36,15 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   for (Note note in notes)
                     TextButton(
-                      onPressed: () =>  Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => NewNote(note: note)),),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewNote(
+                                    note: note,
+                                  )),
+                        );
+                      },
                       child: ListTile(
                         title: Text(note.title),
                         subtitle: Text(note.content),

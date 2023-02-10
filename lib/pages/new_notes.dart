@@ -5,28 +5,24 @@ import 'package:notesapp/services/services.dart';
 import '../models/note.dart';
 
 class NewNote extends StatefulWidget {
+  final Note note;
+
   const NewNote({
     Key? key,
-    Note? note, 
+    required this.note,
   }) : super(key: key);
 
-  get note => null;
-
-
   @override
-  State<NewNote> createState() => _NewNoteState(note!);
+  State<NewNote> createState() => _NewNoteState();
 }
 
 class _NewNoteState extends State<NewNote> {
-  _NewNoteState(Note note);
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _contentController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Note? note;
 
   @override
   Widget build(BuildContext context) {
+  final TextEditingController titleController = TextEditingController(text: widget.note.title);
+  final TextEditingController contentController = TextEditingController(text: widget.note.content);
     return Scaffold(
         appBar: AppBar(),
         body: Container(
@@ -38,8 +34,7 @@ class _NewNoteState extends State<NewNote> {
                 child: Column(
                   children: [
                     TextFormField(
-                      initialValue: note?.title,
-                      controller: _titleController,
+                      controller: titleController,
                       decoration:
                           const InputDecoration(labelText: 'Título de la nota'),
                       validator: (value) {
@@ -50,8 +45,7 @@ class _NewNoteState extends State<NewNote> {
                       },
                     ),
                     TextFormField(
-                      initialValue: note?.content,
-                      controller: _contentController,
+                      controller: contentController,
                       decoration: const InputDecoration(labelText: 'Contenido'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -69,10 +63,11 @@ class _NewNoteState extends State<NewNote> {
                               final navigator = Navigator.of(context);
                               final messenger = ScaffoldMessenger.of(context);
                               if (_formKey.currentState!.validate()) {
-                               bool response = await Provider.of<AppState>(context,
+                                bool response = await Provider.of<AppState>(
+                                        context,
                                         listen: false)
-                                    .saveNotes(_titleController.text,
-                                        _contentController.text);
+                                    .saveNotes(titleController.text,
+                                        contentController.text);
 
                                 if (response) {
                                   navigator.pop();
@@ -103,10 +98,17 @@ class _NewNoteState extends State<NewNote> {
         ));
   }
 
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _contentController.dispose();
-    super.dispose();
+  // @override
+  // void dispose() {
+  //   titleController.dispose();
+  //   contentController.dispose();
+  //   super.dispose();
+  // }
+
+  String text(String text) {
+    if (text.isNotEmpty) {
+      return text;
+    }
+    return "";
   }
 }
