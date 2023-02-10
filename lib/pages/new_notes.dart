@@ -2,19 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:notesapp/services/services.dart';
 
+import '../models/note.dart';
+
 class NewNote extends StatefulWidget {
   const NewNote({
     Key? key,
+    Note? note, 
   }) : super(key: key);
 
+  get note => null;
+
+
   @override
-  State<NewNote> createState() => _NewNoteState();
+  State<NewNote> createState() => _NewNoteState(note!);
 }
 
 class _NewNoteState extends State<NewNote> {
+  _NewNoteState(Note note);
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Note? note;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +31,6 @@ class _NewNoteState extends State<NewNote> {
         appBar: AppBar(),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          // height: 300,
           color: Colors.white70,
           child: Form(
               key: _formKey,
@@ -30,6 +38,7 @@ class _NewNoteState extends State<NewNote> {
                 child: Column(
                   children: [
                     TextFormField(
+                      initialValue: note?.title,
                       controller: _titleController,
                       decoration:
                           const InputDecoration(labelText: 'Título de la nota'),
@@ -41,6 +50,7 @@ class _NewNoteState extends State<NewNote> {
                       },
                     ),
                     TextFormField(
+                      initialValue: note?.content,
                       controller: _contentController,
                       decoration: const InputDecoration(labelText: 'Contenido'),
                       validator: (value) {

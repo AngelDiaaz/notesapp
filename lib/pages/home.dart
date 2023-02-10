@@ -3,6 +3,7 @@ import 'package:notesapp/services/appstate.dart';
 import 'package:provider/provider.dart';
 
 import '../models/note.dart';
+import 'new_notes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,14 +36,18 @@ class _HomePageState extends State<HomePage> {
               return ListView(
                 children: [
                   for (Note note in notes)
-                    ListTile(
-                      title: Text(note.title),
-                      subtitle: Text(note.content),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete_outline_outlined),
-                        onPressed: () {
-                          state!.deleteNote(note.key);
-                        },
+                    TextButton(
+                      onPressed: () =>  Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => NewNote(note: note)),),
+                      child: ListTile(
+                        title: Text(note.title),
+                        subtitle: Text(note.content),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete_outline_outlined),
+                          onPressed: () {
+                            state!.deleteNote(note.key);
+                          },
+                        ),
                       ),
                     )
                 ],
