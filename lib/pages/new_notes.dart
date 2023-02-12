@@ -21,8 +21,10 @@ class _NewNoteState extends State<NewNote> {
 
   @override
   Widget build(BuildContext context) {
-  final TextEditingController titleController = TextEditingController(text: widget.note.title);
-  final TextEditingController contentController = TextEditingController(text: widget.note.content);
+    final TextEditingController titleController =
+        TextEditingController(text: widget.note.title);
+    final TextEditingController contentController =
+        TextEditingController(text: widget.note.content);
     return Scaffold(
         appBar: AppBar(),
         body: Container(
@@ -63,11 +65,23 @@ class _NewNoteState extends State<NewNote> {
                               final navigator = Navigator.of(context);
                               final messenger = ScaffoldMessenger.of(context);
                               if (_formKey.currentState!.validate()) {
-                                bool response = await Provider.of<AppState>(
-                                        context,
-                                        listen: false)
-                                    .saveNotes(titleController.text,
-                                        contentController.text);
+                                bool response = false;
+                                if (widget.note.title.isNotEmpty &&
+                                    widget.note.content.isNotEmpty) {
+                                  response = await Provider.of<AppState>(
+                                          context,
+                                          listen: false)
+                                      .updateNote(Note(
+                                          key: widget.note.key,
+                                          title: titleController.text,
+                                          content: contentController.text));
+                                } else {
+                                  response = await Provider.of<AppState>(
+                                          context,
+                                          listen: false)
+                                      .saveNotes(titleController.text,
+                                          contentController.text);
+                                }
 
                                 if (response) {
                                   navigator.pop();
@@ -97,11 +111,4 @@ class _NewNoteState extends State<NewNote> {
               )),
         ));
   }
-
-  // @override
-  // void dispose() {
-  //   titleController.dispose();
-  //   contentController.dispose();
-  //   super.dispose();
-  // }
 }

@@ -37,4 +37,16 @@ class AppState with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> updateNote(Note note) async {
+    try {
+      bool response = await UserServices().updateNote(note);
+      if(response) {
+        notifyListeners();
+      }
+      return response;
+    } catch (e) {
+      return false;
+    }
+  }
 }
