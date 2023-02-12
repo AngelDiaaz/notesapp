@@ -22,11 +22,18 @@ class _HomePageState extends State<HomePage> {
           title: const Text('Notas App'),
           centerTitle: true,
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'nota');
-          },
-          child: const Icon(Icons.add),
+        floatingActionButton: SizedBox(
+          width: 60,
+          height: 60,
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'nota');
+            },
+            child: const Icon(
+              Icons.add,
+              size: 42,
+            ),
+          ),
         ),
         body: FutureBuilder(
             future: state!.getNotes(),
@@ -46,16 +53,21 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                       child: ListTile(
-                        title: Text(note.title),
-                        subtitle: Text(note.content),
+                        title: Text(
+                          note.title,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        subtitle: Text(note.content,
+                            maxLines: 5, style: const TextStyle(fontSize: 14)),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline_outlined),
+                          color: Colors.redAccent,
                           onPressed: () {
                             state!.deleteNote(note.key);
                           },
                         ),
                       ),
-                    )
+                    ),
                 ],
               );
             }));

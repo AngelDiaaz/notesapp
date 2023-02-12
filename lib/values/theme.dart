@@ -10,7 +10,7 @@ ThemeData myTheme(BuildContext context){
   return ThemeData(
     primaryColor: primary,
     colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: Colors.purple,
+      primarySwatch: Colors.indigo,
     ).copyWith(
       secondary: Colors.indigo,
     )

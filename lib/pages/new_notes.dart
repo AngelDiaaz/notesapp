@@ -26,7 +26,7 @@ class _NewNoteState extends State<NewNote> {
     final TextEditingController contentController =
         TextEditingController(text: widget.note.content);
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(title: const Text('Nota'), centerTitle: true),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           color: Colors.white70,
@@ -37,8 +37,12 @@ class _NewNoteState extends State<NewNote> {
                   children: [
                     TextFormField(
                       controller: titleController,
-                      decoration:
-                          const InputDecoration(labelText: 'Título de la nota'),
+                      decoration: const InputDecoration(
+                          labelText: 'Título de la nota',
+                          labelStyle: TextStyle(
+                            fontSize: 28.0,
+                          )),
+                      style: const TextStyle(fontSize: 22),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Este campo es requerido';
@@ -46,21 +50,36 @@ class _NewNoteState extends State<NewNote> {
                         return null;
                       },
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     TextFormField(
                       controller: contentController,
-                      decoration: const InputDecoration(labelText: 'Contenido'),
+                      decoration: const InputDecoration(
+                          labelText: 'Contenido',
+                          labelStyle: TextStyle(
+                            fontSize: 28.0,
+                          )),
+                      style: const TextStyle(fontSize: 18),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Este campo es requerido';
                         }
                         return null;
                       },
-                      maxLines: 10,
+                      maxLines: 20,
+                    ),
+                    const SizedBox(
+                      height: 18,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                            ),
                             onPressed: () async {
                               final navigator = Navigator.of(context);
                               final messenger = ScaffoldMessenger.of(context);
@@ -97,13 +116,20 @@ class _NewNoteState extends State<NewNote> {
                                 }
                               }
                             },
-                            child: const Text('Aceptar')),
+                            child: const Text(
+                              'Aceptar',
+                              style: TextStyle(fontSize: 20),
+                            )),
                         const SizedBox(
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                            ),
                             onPressed: () async => Navigator.pop(context),
-                            child: const Text('Cancelar')),
+                            child: const Text('Cancelar', style: TextStyle(fontSize: 20),)),
                       ],
                     ),
                   ],
