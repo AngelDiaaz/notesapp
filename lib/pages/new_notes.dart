@@ -18,15 +18,34 @@ class NewNote extends StatefulWidget {
 
 class _NewNoteState extends State<NewNote> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AppState? state;
 
   @override
   Widget build(BuildContext context) {
+    state = Provider.of<AppState>(context, listen: true);
     final TextEditingController titleController =
         TextEditingController(text: widget.note.title);
     final TextEditingController contentController =
         TextEditingController(text: widget.note.content);
     return Scaffold(
-        appBar: AppBar(title: const Text('Nota'), centerTitle: true),
+        appBar: AppBar(
+          title: const Text('Nota'),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.delete_outline_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                if (widget.note.key.isNotEmpty) {
+                  state!.deleteNote(widget.note.key);
+                }
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           color: Colors.white70,
@@ -87,19 +106,14 @@ class _NewNoteState extends State<NewNote> {
                                 bool response = false;
                                 if (widget.note.title.isNotEmpty &&
                                     widget.note.content.isNotEmpty) {
-                                  response = await Provider.of<AppState>(
-                                          context,
-                                          listen: false)
-                                      .updateNote(Note(
-                                          key: widget.note.key,
-                                          title: titleController.text,
-                                          content: contentController.text));
+                                  response = await state!.updateNote(Note(
+                                      key: widget.note.key,
+                                      title: titleController.text,
+                                      content: contentController.text));
                                 } else {
-                                  response = await Provider.of<AppState>(
-                                          context,
-                                          listen: false)
-                                      .saveNotes(titleController.text,
-                                          contentController.text);
+                                  response = await state!.saveNotes(
+                                      titleController.text,
+                                      contentController.text);
                                 }
 
                                 if (response) {
@@ -129,7 +143,10 @@ class _NewNoteState extends State<NewNote> {
                                   vertical: 10, horizontal: 20),
                             ),
                             onPressed: () async => Navigator.pop(context),
-                            child: const Text('Cancelar', style: TextStyle(fontSize: 20),)),
+                            child: const Text(
+                              'Cancelar',
+                              style: TextStyle(fontSize: 20),
+                            )),
                       ],
                     ),
                   ],

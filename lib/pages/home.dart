@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                           style: const TextStyle(fontSize: 18),
                         ),
                         subtitle: Text(note.content,
-                            maxLines: 5, style: const TextStyle(fontSize: 14)),
+                            maxLines: 5, style: const TextStyle(fontSize: 14), overflow: TextOverflow.ellipsis,),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline_outlined),
                           color: Colors.redAccent,
