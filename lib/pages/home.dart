@@ -42,8 +42,7 @@ class _HomePageState extends State<HomePage> {
               List notes = snapshot.data ?? [];
               return ListView(
                 children: [
-                  for (Note note in notes)
-                    noteCard(context, note),
+                  for (Note note in notes) noteCard(context, note),
                 ],
               );
             }));
@@ -51,46 +50,45 @@ class _HomePageState extends State<HomePage> {
 
   Card noteCard(BuildContext context, Note note) {
     return Card(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      ),
-                      elevation: 1,
-                      shadowColor: Colors.black38,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 6),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NewNote(
-                                      note: note,
-                                    )),
-                          );
-                        },
-                        child: ListTile(
-                          title: Text(
-                            note.title,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          subtitle: Text(
-                            note.content,
-                            maxLines: 5,
-                            style: const TextStyle(fontSize: 14),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          trailing: IconButton(
-                            alignment: Alignment.center,
-                            icon: const Icon(Icons.delete_outline_outlined, size: 26),
-                            color: const Color.fromRGBO(255, 110, 110, 1),
-                            onPressed: () {
-                              state!.deleteNote(note.key);
-                            },
-                          ),
-                        ),
-                      ));
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        elevation: 1,
+        shadowColor: Colors.black38,
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+        child: TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NewNote(
+                        note: note,
+                      )),
+            );
+          },
+          child: ListTile(
+            title: Text(
+              note.title,
+              style: const TextStyle(fontSize: 18),
+            ),
+            subtitle: Text(
+              note.content,
+              maxLines: 5,
+              style: const TextStyle(fontSize: 14),
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: IconButton(
+              alignment: Alignment.center,
+              icon: const Icon(Icons.delete_outline_outlined, size: 26),
+              color: const Color.fromRGBO(255, 110, 110, 1),
+              onPressed: () {
+                state!.deleteNote(note.key);
+              },
+            ),
+          ),
+        ));
   }
 }

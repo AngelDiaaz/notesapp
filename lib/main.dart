@@ -25,11 +25,12 @@ class MyApp extends StatelessWidget {
         theme: myTheme(context),
         routes: {
           '/': (_) => const HomePage(),
+          'login': (_) => const Login(),
           'nota': (_) => NewNote(
                 note: note,
               )
         },
-        initialRoute: '/',
+        initialRoute: 'login',
       ),
     );
   }
