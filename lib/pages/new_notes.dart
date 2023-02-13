@@ -37,6 +37,7 @@ class _NewNoteState extends State<NewNote> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SizedBox(height: 30,),
                     TextFormField(
                       controller: titleController,
                       decoration: const InputDecoration(
@@ -53,7 +54,7 @@ class _NewNoteState extends State<NewNote> {
                       },
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 24,
                     ),
                     TextFormField(
                       controller: contentController,
@@ -72,7 +73,7 @@ class _NewNoteState extends State<NewNote> {
                       maxLines: 20,
                     ),
                     const SizedBox(
-                      height: 18,
+                      height: 30,
                     ),
                     actionsButtons(context, titleController, contentController),
                   ],

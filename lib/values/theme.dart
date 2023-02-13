@@ -8,12 +8,21 @@ const Color esmeralda = Color(0xff23CE6B);
 
 ThemeData myTheme(BuildContext context){
   return ThemeData(
-    primaryColor: primary,
-    colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: Colors.indigo,
-    ).copyWith(
-      secondary: Colors.indigo,
-    )
+    primarySwatch: Colors.blueGrey,
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.black38),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.blueAccent),
+      ),
+      labelStyle: TextStyle(
+        color: Colors.blueGrey,
+      ),
+    ),
   );
 }
 

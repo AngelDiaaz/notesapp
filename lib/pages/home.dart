@@ -19,8 +19,9 @@ class _HomePageState extends State<HomePage> {
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Notas App'),
+          title: const Text('Notas'),
           centerTitle: true,
+          // backgroundColor: Colors.white54,
         ),
         floatingActionButton: SizedBox(
           width: 60,
@@ -42,7 +43,25 @@ class _HomePageState extends State<HomePage> {
               return ListView(
                 children: [
                   for (Note note in notes)
-                    TextButton(
+                    noteCard(context, note),
+                ],
+              );
+            }));
+  }
+
+  Card noteCard(BuildContext context, Note note) {
+    return Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      ),
+                      elevation: 1,
+                      shadowColor: Colors.black38,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 6),
+                      child: TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -64,15 +83,14 @@ class _HomePageState extends State<HomePage> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           trailing: IconButton(
-                            icon: const Icon(Icons.delete_outline_outlined),
-                            color: Colors.redAccent,
+                            alignment: Alignment.center,
+                            icon: const Icon(Icons.delete_outline_outlined, size: 26),
+                            color: const Color.fromRGBO(255, 110, 110, 1),
                             onPressed: () {
                               state!.deleteNote(note.key);
                             },
                           ),
-                        ))
-                ],
-              );
-            }));
+                        ),
+                      ));
   }
 }
