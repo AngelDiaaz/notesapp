@@ -43,31 +43,34 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   for (Note note in notes)
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NewNote(
-                                    note: note,
-                                  )),
-                        );
-                      },
-                      child: ListTile(
-                        title: Text(
-                          note.title,
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                        subtitle: Text(note.content,
-                            maxLines: 5, style: const TextStyle(fontSize: 14), overflow: TextOverflow.ellipsis,),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete_outline_outlined),
-                          color: Colors.redAccent,
-                          onPressed: () {
-                            state!.deleteNote(note.key);
-                          },
-                        ),
-                      ),
-                    ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewNote(
+                                      note: note,
+                                    )),
+                          );
+                        },
+                        child: ListTile(
+                          title: Text(
+                            note.title,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            note.content,
+                            maxLines: 5,
+                            style: const TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete_outline_outlined),
+                            color: Colors.redAccent,
+                            onPressed: () {
+                              state!.deleteNote(note.key);
+                            },
+                          ),
+                        ))
                 ],
               );
             }));
