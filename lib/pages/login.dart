@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/home.dart';
+import 'package:provider/provider.dart';
+
+import '../models/user.dart';
+import '../services/appstate.dart';
 
 class Login extends StatelessWidget {
-  const Login ({Key? key}) : super(key: key);
+  Login({Key? key}) : super(key: key);
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AppState? state;
 
   @override
   Widget build(BuildContext context) {
+    state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Login Page"),
+        title: const Text("Login"),
+        centerTitle: true,
+        backgroundColor: Colors.lightBlue,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -26,63 +36,105 @@ class Login extends StatelessWidget {
                     child: Image.asset('assets/images/login.jpg')),
               ),
             ),
-            const Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
-              ),
+            const SizedBox(
+              height: 60,
             ),
-            const Padding(
-              padding: EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password'),
-              ),
-            ),
-            MaterialButton(
-              onPressed: (){
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
-              },
-              child: const Text(
-                'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
-              ),
+            credenciales(),
+            const SizedBox(
+              height: 100,
             ),
             Container(
-              height: 50,
-              width: 250,
+              height: 60,
+              width: 270,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => const HomePage()));
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
-              ),
+                  color: Colors.lightBlue,
+                  borderRadius: BorderRadius.circular(20)),
+              child: FutureBuilder(
+                  future: state!.getNotes(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<List> snapshot) {
+                    List users = [
+                      User(user: 'admin', password: 'admin')];
+                    return MaterialButton(
+                      onPressed: () {
+                        bool response = false;
+                        // final navigator = Navigator.pushNamed(context, "/");
+                        if (_formKey.currentState!.validate()) {
+                          for (var user in users) {
+                            print("${user.user}-----${user.password}");
+                            if (user.user == userController.text &&
+                                user.password ==
+                                    passwordController.text) {
+                              response = true;
+                            }
+                          }
+                          if (response) {
+                            Navigator.pushNamed(context, "/");
+                          }
+                        }
+                      },
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    );
+                  }),
             ),
             const SizedBox(
               height: 130,
             ),
-            const Text('New User? Create Account')
           ],
         ),
       ),
     );
   }
 
+  Column credenciales() {
+    return Column(
+      children: [
+        Padding(
+          //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: TextFormField(
+            controller: userController,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Usuario',
+                hintText: 'Introduce tu usuario'),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Este campo es requerido';
+              }
+              return null;
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 15.0, right: 15.0, top: 15, bottom: 0),
+          //padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Form(
+            key: _formKey,
+            child: TextFormField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Contraseña',
+                  hintText: 'Introduce la contraseña'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Este campo es requerido';
+                }
+                return null;
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
-

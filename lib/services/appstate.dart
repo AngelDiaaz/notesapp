@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:notesapp/models/user.dart';
+import 'package:notesapp/services/login_services.dart';
 import 'package:notesapp/services/services.dart';
 import '../models/note.dart';
 
@@ -47,6 +49,18 @@ class AppState with ChangeNotifier {
       return response;
     } catch (e) {
       return false;
+    }
+  }
+
+  final List<User> _myUsers = [
+    User(user: 'admin', password: 'admin')];
+
+  Future<List<User>> getUsers() async {
+    try {
+      // _myUsers = await LoginServices().getUsers();
+      return _myUsers;
+    } catch (e) {
+      return _myUsers;
     }
   }
 }
