@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:notesapp/services/services.dart';
-
-import '../models/note.dart';
+import '../models/models.dart';
 
 class NewNote extends StatefulWidget {
   final Note note;

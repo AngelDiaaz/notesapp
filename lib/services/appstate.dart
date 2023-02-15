@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:notesapp/models/user.dart';
+import 'package:notesapp/models/models.dart';
 import 'package:notesapp/services/login_services.dart';
 import 'package:notesapp/services/services.dart';
-import '../models/note.dart';
 
 class AppState with ChangeNotifier {
   Future<bool> saveNotes(String text, String text2) async {

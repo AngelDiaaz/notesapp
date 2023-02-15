@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/services/appstate.dart';
 import 'package:provider/provider.dart';
-import '../models/note.dart';
+import '../models/models.dart';
 import 'new_notes.dart';
 
 class HomePage extends StatefulWidget {
