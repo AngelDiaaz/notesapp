@@ -52,12 +52,11 @@ class AppState with ChangeNotifier {
     }
   }
 
-  final List<User> _myUsers = [
-    User(user: 'admin', password: 'admin')];
+  List<User> _myUsers = [];
 
   Future<List<User>> getUsers() async {
     try {
-      // _myUsers = await LoginServices().getUsers();
+      _myUsers = await LoginServices().getUsers();
       return _myUsers;
     } catch (e) {
       return _myUsers;

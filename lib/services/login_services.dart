@@ -1,15 +1,18 @@
-import 'package:notesapp/models/note.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notesapp/models/user.dart';
 
 class LoginServices {
   Future<List<User>> getUsers() async {
-    List<User> myUsers = [
-      User(user: 'admin', password: 'admin')
-    ];
+    await Firebase.initializeApp();
+    // await FirebaseDatabase.instance
+    //     .ref()
+    //     .child('users')
+    //     .push()
+    //     .set({'user': 'pepe', 'password': '1234'});
+    List<User> myUsers = [];
     try {
-      await Firebase.initializeApp();
+      // await Firebase.initializeApp();
       DatabaseEvent snap =
       await FirebaseDatabase.instance.ref().child('users').once();
 

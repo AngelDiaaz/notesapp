@@ -50,11 +50,10 @@ class Login extends StatelessWidget {
                   color: Colors.lightBlue,
                   borderRadius: BorderRadius.circular(20)),
               child: FutureBuilder(
-                  future: state!.getNotes(),
+                  future: state!.getUsers(),
                   builder:
                       (BuildContext context, AsyncSnapshot<List> snapshot) {
-                    List users = [
-                      User(user: 'admin', password: 'admin')];
+                    List users = snapshot.data ?? [];
                     return MaterialButton(
                       onPressed: () {
                         bool response = false;
