@@ -19,7 +19,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Login"),
         centerTitle: true,
@@ -47,7 +46,7 @@ class _LoginState extends State<Login> {
               height: 60,
               width: 270,
               decoration: BoxDecoration(
-                  color: Colors.lightBlue,
+                  color: const Color(0xff007991),
                   borderRadius: BorderRadius.circular(20)),
               child: FutureBuilder(
                   future: state!.getUsers(),
@@ -79,7 +78,7 @@ class _LoginState extends State<Login> {
                         }
                       },
                       child: const Text(
-                        'Login',
+                        'Iniciar sesión',
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     );
@@ -98,7 +97,7 @@ class _LoginState extends State<Login> {
                 ),
                 child: const Text(
                   "Registrarse",
-                  style: TextStyle(fontSize: 25
+                  style: TextStyle(fontSize: 25, color: Color(0xff007991),
                   ),
                 ),
                 onPressed: () => Navigator.pushNamed(context, 'register'),

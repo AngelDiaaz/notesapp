@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/services/appstate.dart';
 import 'package:provider/provider.dart';
 import '../models/models.dart';
+import '../values/theme.dart';
 import 'new_notes.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AppState? state;
+  bool isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,23 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Notas'),
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                final themeProvider = Provider.of<ThemeProvider>(context,
+                    listen:
+                        false);
+                setState(() {
+                  isDarkMode = !isDarkMode;
+                });
+
+                isDarkMode
+                    ? themeProvider.setDarkMode()
+                    : themeProvider.setLightMode();
+              },
+              icon: const Icon(Icons.dark_mode_outlined),
+            ),
+          ],
         ),
         floatingActionButton: SizedBox(
           width: 60,
@@ -56,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         elevation: 1,
-        shadowColor: Colors.black38,
+        // shadowColor: Colors.black38,
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
         child: TextButton(
           onPressed: () {

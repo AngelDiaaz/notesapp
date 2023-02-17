@@ -30,7 +30,6 @@ class _NewNoteState extends State<NewNote> {
         appBar: buildAppBar(context),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          color: Colors.white70,
           child: Form(
               key: _formKey,
               child: SingleChildScrollView(

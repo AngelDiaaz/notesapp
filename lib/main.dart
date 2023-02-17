@@ -7,13 +7,22 @@ import 'package:provider/provider.dart';
 import 'models/note.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      // create the provider
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     Note note = Note(key: "", title: "", content: "");
@@ -22,7 +31,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Notas App',
-        theme: myTheme(context),
+        // theme: myTheme(context),
+        theme: Provider.of<ThemeProvider>(context).currentTheme,
         routes: {
           '/': (_) => const HomePage(),
           'login': (_) => const Login(),

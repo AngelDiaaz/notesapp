@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/services.dart';
@@ -21,11 +20,9 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Register"),
         centerTitle: true,
-        backgroundColor: Colors.lightBlue,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -50,7 +47,7 @@ class _RegisterState extends State<Register> {
               height: 60,
               width: 270,
               decoration: BoxDecoration(
-                  color: Colors.lightBlue,
+                  color: const Color(0xff007991),
                   borderRadius: BorderRadius.circular(20)),
               child: FutureBuilder(
                   builder:
