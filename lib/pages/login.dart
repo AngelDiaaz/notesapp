@@ -23,7 +23,6 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: const Text("Login"),
         centerTitle: true,
-        backgroundColor: Colors.lightBlue,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -99,8 +98,7 @@ class _LoginState extends State<Login> {
                 ),
                 child: const Text(
                   "Registrarse",
-                  style: TextStyle(
-                    color: Colors.lightBlue, fontSize: 25
+                  style: TextStyle(fontSize: 25
                   ),
                 ),
                 onPressed: () => Navigator.pushNamed(context, 'register'),

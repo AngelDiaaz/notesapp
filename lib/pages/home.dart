@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             trailing: IconButton(
               alignment: Alignment.center,
               icon: const Icon(Icons.delete_outline_outlined, size: 26),
-              color: const Color.fromRGBO(255, 110, 110, 1),
+              // color: const Color.fromRGBO(255, 110, 110, 1),
               onPressed: () {
                 state!.deleteNote(note.key);
               },
