@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:notesapp/models/models.dart';
-import 'package:notesapp/services/login_services.dart';
+import 'package:notesapp/services/users_services.dart';
 import 'package:notesapp/services/services.dart';
 
 class AppState with ChangeNotifier {
@@ -42,7 +42,7 @@ class AppState with ChangeNotifier {
   Future<bool> updateNote(Note note) async {
     try {
       bool response = await UserServices().updateNote(note);
-      if(response) {
+      if (response) {
         notifyListeners();
       }
       return response;
@@ -59,6 +59,30 @@ class AppState with ChangeNotifier {
       return _myUsers;
     } catch (e) {
       return _myUsers;
+    }
+  }
+
+  Future<bool> saveUser(String user, String password) async {
+    try {
+      bool response = await LoginServices().saveUser(user, password);
+      if (response) {
+        notifyListeners();
+      }
+      return response;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> deleteUser(String key) async {
+    try {
+      bool response = await LoginServices().deleteUser(key);
+      if (response) {
+        notifyListeners();
+      }
+      return response;
+    } catch (e) {
+      return false;
     }
   }
 }

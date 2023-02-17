@@ -1,17 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/appstate.dart';
+import '../services/services.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordRepeatController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AppState? state;
 
@@ -21,7 +23,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text("Register"),
         centerTitle: true,
         backgroundColor: Colors.lightBlue,
       ),
@@ -42,7 +44,7 @@ class _LoginState extends State<Login> {
             ),
             _credentials(),
             const SizedBox(
-              height: 80,
+              height: 70,
             ),
             Container(
               height: 60,
@@ -51,27 +53,23 @@ class _LoginState extends State<Login> {
                   color: Colors.lightBlue,
                   borderRadius: BorderRadius.circular(20)),
               child: FutureBuilder(
-                  future: state!.getUsers(),
                   builder:
                       (BuildContext context, AsyncSnapshot<List> snapshot) {
-                    List users = snapshot.data ?? [];
                     return MaterialButton(
                       onPressed: () {
                         bool response = false;
                         if (_formKey.currentState!.validate()) {
-                          for (var user in users) {
-                            if (user.user == userController.text &&
-                                user.password == passwordController.text) {
+                            if (passwordController.text == passwordRepeatController.text) {
+                              state!.saveUser(userController.text, passwordController.text);
                               response = true;
                             }
-                          }
                           if (response) {
-                            Navigator.pushNamed(context, "/");
+                            Navigator.pushNamed(context, "login");
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               content: Text(
-                                'Error credenciales incorrectas',
+                                'Error las contraseñas no coinciden',
                                 style: TextStyle(fontSize: 16),
                               ),
                               backgroundColor: Colors.red,
@@ -80,31 +78,11 @@ class _LoginState extends State<Login> {
                         }
                       },
                       child: const Text(
-                        'Login',
+                        'Registrarse',
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     );
                   }),
-            ),
-            const SizedBox(height: 30,),
-            SizedBox(
-              width: 270,
-              height: 60,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  side: const BorderSide(width: 1, color:Colors.black12),
-                ),
-                child: const Text(
-                  "Registrarse",
-                  style: TextStyle(
-                    color: Colors.lightBlue, fontSize: 25
-                  ),
-                ),
-                onPressed: () => Navigator.pushNamed(context, 'register'),
-              ),
             ),
             const SizedBox(
               height: 130,
@@ -151,6 +129,28 @@ class _LoginState extends State<Login> {
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Contraseña',
+                  hintText: 'Introduce la contraseña'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Este campo es requerido';
+                }
+                return null;
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 15.0, right: 15.0, top: 15, bottom: 0),
+            //padding: EdgeInsets.symmetric(horizontal: 15),
+            child: TextFormField(
+              controller: passwordRepeatController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Repetir contraseña',
                   hintText: 'Introduce la contraseña'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
