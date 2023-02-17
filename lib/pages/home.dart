@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Notas'),
           centerTitle: true,
-          // backgroundColor: Colors.white54,
         ),
         floatingActionButton: SizedBox(
           width: 60,
@@ -32,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: const Icon(
               Icons.add,
-              size: 42,
+              size: 40,
             ),
           ),
         ),
