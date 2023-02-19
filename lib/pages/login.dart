@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/appstate.dart';
 
+///Clase con la vista del login de la app
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -17,6 +18,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    // Creo un state para llamar a los metodos de la base de datos
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
@@ -62,11 +64,14 @@ class _LoginState extends State<Login> {
                         bool response = false;
                         if (_formKey.currentState!.validate()) {
                           for (var user in users) {
+                            // Compruebo que el usuario coinciden con un usuario de la base de datos
                             if (user.user == userController.text &&
                                 user.password == passwordController.text) {
                               response = true;
                             }
                           }
+
+                          // Si esta correcto
                           if (response) {
                             Navigator.pushNamed(context, "/");
                           } else {
@@ -125,13 +130,13 @@ class _LoginState extends State<Login> {
     );
   }
 
+  /// Metodo con los widgets para rellenar el usuario
   Form _credentials() {
     return Form(
       key: _formKey,
       child: Column(
         children: [
           Padding(
-            //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: TextFormField(
               controller: userController,
@@ -153,7 +158,6 @@ class _LoginState extends State<Login> {
           Padding(
             padding: const EdgeInsets.only(
                 left: 15.0, right: 15.0, top: 15, bottom: 0),
-            //padding: EdgeInsets.symmetric(horizontal: 15),
             child: TextFormField(
               controller: passwordController,
               obscureText: true,

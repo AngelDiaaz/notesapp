@@ -9,7 +9,6 @@ import 'models/note.dart';
 void main() {
   runApp(
     MultiProvider(
-      // create the provider
       providers: [
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(),
@@ -25,14 +24,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Creamos una nota vacia para poder ir a la pestaña de notas y crear una
     Note note = Note(key: "", title: "", content: "");
     return ChangeNotifierProvider(
       create: (BuildContext context) => AppState(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Notas App',
-        // theme: myTheme(context),
         theme: Provider.of<ThemeProvider>(context).currentTheme,
+        // Declaro las rutas que tiene la app
         routes: {
           '/': (_) => const HomePage(),
           'login': (_) => const Login(),
@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
                 note: note,
               )
         },
+        // Inicio la app por la ruta del login
         initialRoute: 'login',
       ),
     );

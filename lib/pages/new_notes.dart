@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:notesapp/services/services.dart';
 import '../models/models.dart';
 
+///Clase con la vista de una nueva nota
 class NewNote extends StatefulWidget {
   final Note note;
 
@@ -82,6 +83,7 @@ class _NewNoteState extends State<NewNote> {
         ));
   }
 
+  /// Metodo con las funciones de los botones de la vista
   Row actionsButtons(
       BuildContext context,
       TextEditingController titleController,
@@ -98,6 +100,7 @@ class _NewNoteState extends State<NewNote> {
               final messenger = ScaffoldMessenger.of(context);
               if (_formKey.currentState!.validate()) {
                 bool response = false;
+                // Si los campos no estan vacios se inserta la nota en la base de datos
                 if (widget.note.title.isNotEmpty &&
                     widget.note.content.isNotEmpty) {
                   response = await state!.updateNote(Note(
@@ -109,6 +112,7 @@ class _NewNoteState extends State<NewNote> {
                       .saveNotes(titleController.text, contentController.text);
                 }
 
+                // Si esta correcto
                 if (response) {
                   navigator.pop();
                   messenger.showSnackBar(const SnackBar(
@@ -162,7 +166,9 @@ class _NewNoteState extends State<NewNote> {
             color: Colors.white,
             size: 25,
           ),
+          // Al presionar este boton se elimina la nota
           onPressed: () {
+            // Si es una nota
             if (widget.note.key.isNotEmpty) {
               state!.deleteNote(widget.note.key);
             }

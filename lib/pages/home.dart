@@ -5,6 +5,7 @@ import '../models/models.dart';
 import '../values/theme.dart';
 import 'new_notes.dart';
 
+///Clase Home de la app
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Creo un state para llamar a los metodos de la base de datos
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
         appBar: AppBar(
@@ -29,6 +31,7 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           actions: [
             IconButton(
+              // Al pulsar cambia el tema de claro a oscuro y viceversa
               onPressed: () {
                 final themeProvider =
                     Provider.of<ThemeProvider>(context, listen: false);
@@ -48,6 +51,7 @@ class _HomePageState extends State<HomePage> {
           width: 60,
           height: 60,
           child: FloatingActionButton(
+            // Al pulsar se me abre la vista para crear una nueva nota
             onPressed: () {
               Navigator.pushNamed(context, 'nota');
             },
@@ -61,15 +65,17 @@ class _HomePageState extends State<HomePage> {
             future: state!.getNotes(),
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
               List notes = snapshot.data ?? [];
+              // Listo todas las notas que tengo en la base de datos en la vista
               return ListView(
                 children: [
-                  for (Note note in notes) noteCard(context, note),
+                  for (Note note in notes) _noteCard(context, note),
                 ],
               );
             }));
   }
 
-  Card noteCard(BuildContext context, Note note) {
+  /// Widget de una nota
+  Card _noteCard(BuildContext context, Note note) {
     return Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -78,9 +84,9 @@ class _HomePageState extends State<HomePage> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         elevation: 1,
-        // shadowColor: Colors.black38,
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
         child: TextButton(
+          // Al pulsar me dirige a una pestaña con la informacion mas detallada de la nota
           onPressed: () {
             Navigator.push(
               context,
@@ -104,7 +110,7 @@ class _HomePageState extends State<HomePage> {
             trailing: IconButton(
               alignment: Alignment.center,
               icon: const Icon(Icons.delete_outline_outlined, size: 26),
-              // color: const Color.fromRGBO(255, 110, 110, 1),
+              // Al pulsar elimino la nota de la base de datos
               onPressed: () {
                 state!.deleteNote(note.key);
               },

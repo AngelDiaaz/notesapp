@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/services.dart';
 
+///Clase con la vista del registro de la app
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -59,13 +60,17 @@ class _RegisterState extends State<Register> {
                 return MaterialButton(
                   onPressed: () {
                     bool response = false;
+                    // Compruebo si todos los campos estan rellenos
                     if (_formKey.currentState!.validate()) {
+                      // Si esta correcto cre el nuevo usuario
                       if (passwordController.text ==
                           passwordRepeatController.text) {
                         state!.saveUser(
                             userController.text, passwordController.text);
                         response = true;
                       }
+
+                      // Si esta correcto me dirigo a la vista del login
                       if (response) {
                         Navigator.pushNamed(context, "login");
                       } else {
@@ -100,13 +105,13 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  /// Metodo con los widgets para rellenar el usuario
   Form _credentials() {
     return Form(
       key: _formKey,
       child: Column(
         children: [
           Padding(
-            //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: TextFormField(
               controller: userController,
@@ -128,7 +133,6 @@ class _RegisterState extends State<Register> {
           Padding(
             padding: const EdgeInsets.only(
                 left: 15.0, right: 15.0, top: 15, bottom: 0),
-            //padding: EdgeInsets.symmetric(horizontal: 15),
             child: TextFormField(
               controller: passwordController,
               obscureText: true,
@@ -150,7 +154,6 @@ class _RegisterState extends State<Register> {
           Padding(
             padding: const EdgeInsets.only(
                 left: 15.0, right: 15.0, top: 15, bottom: 0),
-            //padding: EdgeInsets.symmetric(horizontal: 15),
             child: TextFormField(
               controller: passwordRepeatController,
               obscureText: true,

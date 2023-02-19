@@ -4,6 +4,7 @@ import 'package:notesapp/services/users_services.dart';
 import 'package:notesapp/services/services.dart';
 
 class AppState with ChangeNotifier {
+  /// Metodo que crea una nota en la base de datos
   Future<bool> saveNotes(String text, String text2) async {
     try {
       bool response = await UserServices().saveNotes(text, text2);
@@ -18,6 +19,7 @@ class AppState with ChangeNotifier {
 
   List<Note> _myNotes = [];
 
+  /// Metodo que devuelve todas las notas de la base de datos
   Future<List<Note>> getNotes() async {
     try {
       _myNotes = await UserServices().getNotes();
@@ -27,6 +29,7 @@ class AppState with ChangeNotifier {
     }
   }
 
+  /// Metodo que elimina una nota de la base de datos
   Future<bool> deleteNote(String key) async {
     try {
       bool response = await UserServices().deleteNote(key);
@@ -39,6 +42,7 @@ class AppState with ChangeNotifier {
     }
   }
 
+  /// Metodo que modifica una nota de la base de datos
   Future<bool> updateNote(Note note) async {
     try {
       bool response = await UserServices().updateNote(note);
@@ -53,6 +57,7 @@ class AppState with ChangeNotifier {
 
   List<User> _myUsers = [];
 
+  /// Metodo que devuelve todos los usuarios de la base de datos
   Future<List<User>> getUsers() async {
     try {
       _myUsers = await LoginServices().getUsers();
@@ -62,6 +67,7 @@ class AppState with ChangeNotifier {
     }
   }
 
+  /// Metodo que guarda un usuario de la base de datos
   Future<bool> saveUser(String user, String password) async {
     try {
       bool response = await LoginServices().saveUser(user, password);
@@ -74,6 +80,7 @@ class AppState with ChangeNotifier {
     }
   }
 
+  /// Metodo que elimina un usuario de la base de datos
   Future<bool> deleteUser(String key) async {
     try {
       bool response = await LoginServices().deleteUser(key);

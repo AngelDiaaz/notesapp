@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class UserServices {
+  /// Metodo que obtiene y devuelve todas las notas de la base de datos
   Future<List<Note>> getNotes() async {
     List<Note> myNotes = [];
     try {
@@ -11,18 +12,19 @@ class UserServices {
           await FirebaseDatabase.instance.ref().child('notes').once();
 
       if (snap.snapshot.exists) {
-        dynamic value;
-        // print(snap.snapshot.value );
         for (var i = 0; i < snap.snapshot.children.length; i++) {
           var key = snap.snapshot.children.elementAt(i).key;
-          value = snap.snapshot.children.elementAt(i).value;
+          dynamic value = snap.snapshot.children.elementAt(i).value;
           Map map = {'key': key, ...value};
 
+          // Mapeo la informacion en una nueva nota
           Note newNote = Note(
             content: map['body'],
             key: map['key'],
             title: map['title'],
           );
+
+          // Añado la nota de la base de datos en una lista
           myNotes.add(newNote);
         }
       }
@@ -32,6 +34,7 @@ class UserServices {
     }
   }
 
+  /// Metodo que inserta una nota en la base de datos
   Future<bool> saveNotes(String title, String content) async {
     try {
       await Firebase.initializeApp();
@@ -46,6 +49,7 @@ class UserServices {
     }
   }
 
+  /// Metodo que modifica una nota de la base de datos
   Future<bool> updateNote(Note note) async {
     try {
       await Firebase.initializeApp();
@@ -62,6 +66,7 @@ class UserServices {
     }
   }
 
+  /// Metodo que elimina una nota de la base de datos
   Future<bool> deleteNote(String key) async {
     try {
       await FirebaseDatabase.instance.ref().child('notes').child(key).remove();

@@ -10,10 +10,12 @@ const Color darkGrey = Color(0xff172121);
 class ThemeProvider extends ChangeNotifier {
   ThemeData? currentTheme;
 
+  // Cuando llamo a esta clase el metodo por defecto que voy a llamar es el del tema claro
   ThemeProvider() {
     setLightMode();
   }
 
+  /// Metodo que hace el tema de la aplicacion sea clara
   setLightMode() {
     currentTheme = ThemeData(
       brightness: Brightness.light,
@@ -24,6 +26,7 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Metodo que hace el tema de la aplicacion sea oscuro
   setDarkMode() {
     currentTheme = ThemeData(
       brightness: Brightness.dark,
