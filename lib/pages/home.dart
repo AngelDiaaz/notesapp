@@ -21,14 +21,17 @@ class _HomePageState extends State<HomePage> {
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Notas'),
+          title: const Text('Notas',
+              style: TextStyle(
+                  fontSize: 25,
+                  fontFamily: 'Cabin',
+                  fontWeight: FontWeight.w600)),
           centerTitle: true,
           actions: [
             IconButton(
               onPressed: () {
-                final themeProvider = Provider.of<ThemeProvider>(context,
-                    listen:
-                        false);
+                final themeProvider =
+                    Provider.of<ThemeProvider>(context, listen: false);
                 setState(() {
                   isDarkMode = !isDarkMode;
                 });

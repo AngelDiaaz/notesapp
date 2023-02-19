@@ -20,7 +20,11 @@ class _LoginState extends State<Login> {
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text(
+          "Login",
+          style: TextStyle(
+              fontSize: 25, fontFamily: 'Cabin', fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -79,12 +83,18 @@ class _LoginState extends State<Login> {
                       },
                       child: const Text(
                         'Iniciar sesión',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontFamily: 'FiraSans',
+                            fontWeight: FontWeight.bold),
                       ),
                     );
                   }),
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             SizedBox(
               width: 270,
               height: 60,
@@ -93,12 +103,15 @@ class _LoginState extends State<Login> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  side: const BorderSide(width: 1, color:Colors.black12),
+                  side: const BorderSide(width: 1, color: Colors.black12),
                 ),
                 child: const Text(
                   "Registrarse",
-                  style: TextStyle(fontSize: 25, color: Color(0xff007991),
-                  ),
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Color(0xff007991),
+                      fontFamily: 'FiraSans',
+                      fontWeight: FontWeight.bold),
                 ),
                 onPressed: () => Navigator.pushNamed(context, 'register'),
               ),
@@ -111,7 +124,6 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
 
   Form _credentials() {
     return Form(

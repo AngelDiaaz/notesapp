@@ -10,7 +10,7 @@ const Color darkGrey = Color(0xff172121);
 class ThemeProvider extends ChangeNotifier {
   ThemeData? currentTheme;
 
-  ThemeProvider(){
+  ThemeProvider() {
     setLightMode();
   }
 
@@ -27,9 +27,10 @@ class ThemeProvider extends ChangeNotifier {
   setDarkMode() {
     currentTheme = ThemeData(
       brightness: Brightness.dark,
-      colorScheme: ColorScheme.fromSwatch()
-          .copyWith(primary: darkGrey,secondary: purple, brightness: Brightness.dark),
-      appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: darkGrey, secondary: purple, brightness: Brightness.dark),
+      appBarTheme:
+          const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
     );
     notifyListeners();
   }

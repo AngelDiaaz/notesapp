@@ -8,18 +8,14 @@ class UserServices {
     try {
       await Firebase.initializeApp();
       DatabaseEvent snap =
-      await FirebaseDatabase.instance.ref().child('notes').once();
+          await FirebaseDatabase.instance.ref().child('notes').once();
 
       if (snap.snapshot.exists) {
         dynamic value;
         // print(snap.snapshot.value );
         for (var i = 0; i < snap.snapshot.children.length; i++) {
-          var key = snap.snapshot.children
-              .elementAt(i)
-              .key;
-          value = snap.snapshot.children
-              .elementAt(i)
-              .value;
+          var key = snap.snapshot.children.elementAt(i).key;
+          value = snap.snapshot.children.elementAt(i).value;
           Map map = {'key': key, ...value};
 
           Note newNote = Note(
@@ -55,7 +51,9 @@ class UserServices {
       await Firebase.initializeApp();
       Map<String, dynamic> map = {'body': note.content, 'title': note.title};
 
-      await FirebaseDatabase.instance.ref().child('notes')
+      await FirebaseDatabase.instance
+          .ref()
+          .child('notes')
           .child(note.key)
           .update(map);
       return true;
@@ -63,14 +61,13 @@ class UserServices {
       return false;
     }
   }
-    Future<bool> deleteNote(String key) async {
-      try {
-        await FirebaseDatabase.instance.ref().child('notes')
-            .child(key)
-            .remove();
-        return true;
-      } catch (e) {
-        return false;
-      }
+
+  Future<bool> deleteNote(String key) async {
+    try {
+      await FirebaseDatabase.instance.ref().child('notes').child(key).remove();
+      return true;
+    } catch (e) {
+      return false;
     }
   }
+}

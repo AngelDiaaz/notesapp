@@ -12,7 +12,8 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController passwordRepeatController = TextEditingController();
+  final TextEditingController passwordRepeatController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AppState? state;
 
@@ -21,7 +22,11 @@ class _RegisterState extends State<Register> {
     state = Provider.of<AppState>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Register"),
+        title: const Text("Register",
+            style: TextStyle(
+                fontSize: 25,
+                fontFamily: 'Cabin',
+                fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -49,37 +54,42 @@ class _RegisterState extends State<Register> {
               decoration: BoxDecoration(
                   color: const Color(0xff007991),
                   borderRadius: BorderRadius.circular(20)),
-              child: FutureBuilder(
-                  builder:
-                      (BuildContext context, AsyncSnapshot<List> snapshot) {
-                    return MaterialButton(
-                      onPressed: () {
-                        bool response = false;
-                        if (_formKey.currentState!.validate()) {
-                            if (passwordController.text == passwordRepeatController.text) {
-                              state!.saveUser(userController.text, passwordController.text);
-                              response = true;
-                            }
-                          if (response) {
-                            Navigator.pushNamed(context, "login");
-                          } else {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text(
-                                'Error las contraseñas no coinciden',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              backgroundColor: Colors.red,
-                            ));
-                          }
-                        }
-                      },
-                      child: const Text(
-                        'Registrarse',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
-                    );
-                  }),
+              child: FutureBuilder(builder:
+                  (BuildContext context, AsyncSnapshot<List> snapshot) {
+                return MaterialButton(
+                  onPressed: () {
+                    bool response = false;
+                    if (_formKey.currentState!.validate()) {
+                      if (passwordController.text ==
+                          passwordRepeatController.text) {
+                        state!.saveUser(
+                            userController.text, passwordController.text);
+                        response = true;
+                      }
+                      if (response) {
+                        Navigator.pushNamed(context, "login");
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text(
+                            'Error las contraseñas no coinciden',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          backgroundColor: Colors.red,
+                        ));
+                      }
+                    }
+                  },
+                  child: const Text(
+                    'Registrarse',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontFamily: 'FiraSans',
+                        fontWeight: FontWeight.bold),
+                  ),
+                );
+              }),
             ),
             const SizedBox(
               height: 130,
@@ -89,7 +99,6 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-
 
   Form _credentials() {
     return Form(

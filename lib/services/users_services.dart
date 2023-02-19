@@ -5,27 +5,18 @@ import 'package:notesapp/models/models.dart';
 class LoginServices {
   Future<List<User>> getUsers() async {
     await Firebase.initializeApp();
-    // await FirebaseDatabase.instance
-    //     .ref()
-    //     .child('users')
-    //     .push()
-    //     .set({'user': 'pepe', 'password': '1234'});
     List<User> myUsers = [];
     try {
       // await Firebase.initializeApp();
       DatabaseEvent snap =
-      await FirebaseDatabase.instance.ref().child('users').once();
+          await FirebaseDatabase.instance.ref().child('users').once();
 
       if (snap.snapshot.exists) {
         dynamic value;
         // print(snap.snapshot.value );
         for (var i = 0; i < snap.snapshot.children.length; i++) {
-          var key = snap.snapshot.children
-              .elementAt(i)
-              .key;
-          value = snap.snapshot.children
-              .elementAt(i)
-              .value;
+          var key = snap.snapshot.children.elementAt(i).key;
+          value = snap.snapshot.children.elementAt(i).value;
           Map map = {'key': key, ...value};
 
           User newUser = User(
@@ -58,9 +49,7 @@ class LoginServices {
 
   Future<bool> deleteUser(String key) async {
     try {
-      await FirebaseDatabase.instance.ref().child('users')
-          .child(key)
-          .remove();
+      await FirebaseDatabase.instance.ref().child('users').child(key).remove();
       return true;
     } catch (e) {
       return false;

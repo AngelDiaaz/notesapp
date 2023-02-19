@@ -35,7 +35,9 @@ class _NewNoteState extends State<NewNote> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 30,),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     TextFormField(
                       controller: titleController,
                       decoration: const InputDecoration(
@@ -80,85 +82,94 @@ class _NewNoteState extends State<NewNote> {
         ));
   }
 
-  Row actionsButtons(BuildContext context, TextEditingController titleController, TextEditingController contentController) {
+  Row actionsButtons(
+      BuildContext context,
+      TextEditingController titleController,
+      TextEditingController contentController) {
     return Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                          ),
-                          onPressed: () async {
-                            final navigator = Navigator.of(context);
-                            final messenger = ScaffoldMessenger.of(context);
-                            if (_formKey.currentState!.validate()) {
-                              bool response = false;
-                              if (widget.note.title.isNotEmpty &&
-                                  widget.note.content.isNotEmpty) {
-                                response = await state!.updateNote(Note(
-                                    key: widget.note.key,
-                                    title: titleController.text,
-                                    content: contentController.text));
-                              } else {
-                                response = await state!.saveNotes(
-                                    titleController.text,
-                                    contentController.text);
-                              }
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            ),
+            onPressed: () async {
+              final navigator = Navigator.of(context);
+              final messenger = ScaffoldMessenger.of(context);
+              if (_formKey.currentState!.validate()) {
+                bool response = false;
+                if (widget.note.title.isNotEmpty &&
+                    widget.note.content.isNotEmpty) {
+                  response = await state!.updateNote(Note(
+                      key: widget.note.key,
+                      title: titleController.text,
+                      content: contentController.text));
+                } else {
+                  response = await state!
+                      .saveNotes(titleController.text, contentController.text);
+                }
 
-                              if (response) {
-                                navigator.pop();
-                                messenger.showSnackBar(const SnackBar(
-                                  content: Text('Nota guardada'),
-                                  backgroundColor: Colors.green,
-                                ));
-                              } else {
-                                messenger.showSnackBar(const SnackBar(
-                                  content: Text('Error al guardar la nota'),
-                                  backgroundColor: Colors.red,
-                                ));
-                              }
-                            }
-                          },
-                          child: const Text(
-                            'Aceptar',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                          ),
-                          onPressed: () async => Navigator.pop(context),
-                          child: const Text(
-                            'Cancelar',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                    ],
-                  );
+                if (response) {
+                  navigator.pop();
+                  messenger.showSnackBar(const SnackBar(
+                    content: Text('Nota guardada'),
+                    backgroundColor: Colors.green,
+                  ));
+                } else {
+                  messenger.showSnackBar(const SnackBar(
+                    content: Text('Error al guardar la nota'),
+                    backgroundColor: Colors.red,
+                  ));
+                }
+              }
+            },
+            child: const Text(
+              'Aceptar',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'FiraSans',
+                  fontWeight: FontWeight.bold),
+            )),
+        const SizedBox(
+          width: 10,
+        ),
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            ),
+            onPressed: () async => Navigator.pop(context),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'FiraSans',
+                  fontWeight: FontWeight.bold),
+            )),
+      ],
+    );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-        title: const Text('Nota'),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.delete_outline_outlined,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              if (widget.note.key.isNotEmpty) {
-                state!.deleteNote(widget.note.key);
-              }
-              Navigator.pop(context);
-            },
-          )
-        ],
-      );
+      title: const Text('Nota',
+          style: TextStyle(
+              fontSize: 25, fontFamily: 'Cabin', fontWeight: FontWeight.w600)),
+      centerTitle: true,
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(
+            Icons.delete_outline_outlined,
+            color: Colors.white,
+            size: 25,
+          ),
+          onPressed: () {
+            if (widget.note.key.isNotEmpty) {
+              state!.deleteNote(widget.note.key);
+            }
+            Navigator.pop(context);
+          },
+        )
+      ],
+    );
   }
 }
